@@ -51,6 +51,8 @@ namespace GMap.NET.MapProviders
 
         public static readonly OpenStreetMapProvider OpenStreetMap = OpenStreetMapProvider.Instance;
 
+        public static readonly BayernAtlas BayernAtlas = BayernAtlas.Instance;
+
         public static readonly OpenStreet4UMapProvider OpenStreet4UMap = OpenStreet4UMapProvider.Instance;
 
         public static readonly OpenCycleMapProvider OpenCycleMap = OpenCycleMapProvider.Instance;
@@ -162,13 +164,7 @@ namespace GMap.NET.MapProviders
         /// <summary>
         /// get all instances of the supported providers
         /// </summary>
-        public static List<GMapProvider> List
-        {
-            get
-            {
-                return list;
-            }
-        }
+        public static List<GMapProvider> List => list;
 
         static Dictionary<Guid, GMapProvider> Hash;
 
@@ -273,14 +269,8 @@ namespace GMap.NET.MapProviders
         /// </summary>
         public bool IsInitialized
         {
-            get
-            {
-                return isInitialized;
-            }
-            internal set
-            {
-                isInitialized = value;
-            }
+            get => isInitialized;
+            internal set => isInitialized = value;
         }
 
         /// <summary>
@@ -356,13 +346,7 @@ namespace GMap.NET.MapProviders
         public bool InvertedAxisY = false;
 
         static string languageStr = "en";
-        public static string LanguageStr
-        {
-            get
-            {
-                return languageStr;
-            }
-        }
+        public static string LanguageStr => languageStr;
         static LanguageType language = LanguageType.English;
 
         /// <summary>
@@ -370,10 +354,7 @@ namespace GMap.NET.MapProviders
         /// </summary>
         public static LanguageType Language
         {
-            get
-            {
-                return language;
-            }
+            get => language;
             set
             {
                 language = value;
@@ -640,39 +621,15 @@ namespace GMap.NET.MapProviders
 
         #region GMapProvider Members
 
-        public override Guid Id
-        {
-            get
-            {
-                return Guid.Empty;
-            }
-        }
+        public override Guid Id => Guid.Empty;
 
         readonly string name = "None";
-        public override string Name
-        {
-            get
-            {
-                return name;
-            }
-        }
+        public override string Name => name;
 
         readonly MercatorProjection projection = MercatorProjection.Instance;
-        public override PureProjection Projection
-        {
-            get
-            {
-                return projection;
-            }
-        }
+        public override PureProjection Projection => projection;
 
-        public override GMapProvider[] Overlays
-        {
-            get
-            {
-                return null;
-            }
-        }
+        public override GMapProvider[] Overlays => null;
 
         public override PureImage GetTileImage(GPoint pos, int zoom)
         {
@@ -689,14 +646,8 @@ namespace GMap.NET.MapProviders
         private ICredentials m_credentials;
         public ICredentials Credentials
         {
-            get
-            {
-                return this.m_credentials;
-            }
-            set
-            {
-                this.m_credentials = value;
-            }
+            get => this.m_credentials;
+            set => this.m_credentials = value;
         }
 
         public Uri GetProxy(Uri uri)

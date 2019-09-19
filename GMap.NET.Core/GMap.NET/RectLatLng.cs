@@ -53,10 +53,7 @@ namespace GMap.NET
 
       public PointLatLng LocationTopLeft
       {
-         get
-         {
-            return new PointLatLng(this.Lat, this.Lng);
-         }
+         get => new PointLatLng(this.Lat, this.Lng);
          set
          {
             this.Lng = value.Lng;
@@ -86,10 +83,7 @@ namespace GMap.NET
 
       public SizeLatLng Size
       {
-         get
-         {
-            return new SizeLatLng(this.HeightLat, this.WidthLng);
-         }
+         get => new SizeLatLng(this.HeightLat, this.WidthLng);
          set
          {
             this.WidthLng = value.WidthLng;
@@ -99,96 +93,42 @@ namespace GMap.NET
 
       public double Lng
       {
-         get
-         {
-            return this.lng;
-         }
-         set
-         {
-            this.lng = value;
-         }
+         get => this.lng;
+         set => this.lng = value;
       }
 
       public double Lat
       {
-         get
-         {
-            return this.lat;
-         }
-         set
-         {
-            this.lat = value;
-         }
+         get => this.lat;
+         set => this.lat = value;
       }
 
       public double WidthLng
       {
-         get
-         {
-            return this.widthLng;
-         }
-         set
-         {
-            this.widthLng = value;
-         }
+         get => this.widthLng;
+         set => this.widthLng = value;
       }
 
       public double HeightLat
       {
-         get
-         {
-            return this.heightLat;
-         }
-         set
-         {
-            this.heightLat = value;
-         }
+         get => this.heightLat;
+         set => this.heightLat = value;
       }
 
-      public double Left
-      {
-         get
-         {
-            return this.Lng;
-         }
-      }
+      public double Left => this.Lng;
 
-      public double Top
-      {
-         get
-         {
-            return this.Lat;
-         }
-      }
+      public double Top => this.Lat;
 
-      public double Right
-      {
-         get
-         {
-            return (this.Lng + this.WidthLng);
-         }
-      }
+      public double Right => (this.Lng + this.WidthLng);
 
-      public double Bottom
-      {
-         get
-         {
-            return (this.Lat - this.HeightLat);
-         }
-      }
+      public double Bottom => (this.Lat - this.HeightLat);
 
       bool NotEmpty;
 
       /// <summary>
       /// returns true if coordinates wasn't assigned
       /// </summary>
-      public bool IsEmpty
-      {
-          get
-          {
-              return !NotEmpty;
-          }
-      }
+      public bool IsEmpty => !NotEmpty;
 
       public override bool Equals(object obj)
       {
