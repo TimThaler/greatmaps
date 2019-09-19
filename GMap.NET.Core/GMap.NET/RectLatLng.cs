@@ -15,6 +15,19 @@ namespace GMap.NET
       private double widthLng;
       private double heightLat;
 
+      /// <summary>
+      /// Example Lithuania:
+      /// new RectLatLng(56.431489960361, 20.8962105239809, 5.8924169643369, 2.58940626652217);
+      /// => 56.431489960361, 20.8962105239809; 53.84208369,26.78862749
+      /// Example Latvia:
+      /// new RectLatLng(58.0794870805093, 20.3286067123543, 7.90883164336887, 2.506129113082);
+      /// => 58.0794870805093, 20.3286067123543; 55.57335797, 28.23743836
+      /// </summary>
+      /// <param name="lat">Latitude of the countries top left corner</param>
+      /// <param name="lng">Longitude of the countries top left corner</param>
+      /// <param name="widthLng">add this value to 'lng' to get the countries bottom right corner longitude coordinate</param>
+      /// <param name="heightLat">subtract this value to 'lat' to get the countries bottom right corner latitude coordinate</param>
+      //Area = new RectLatLng(58.0794870805093, 20.3286067123543, 7.90883164336887, 2.506129113082);
       public RectLatLng(double lat, double lng, double widthLng, double heightLat)
       {
          this.lng = lng;
