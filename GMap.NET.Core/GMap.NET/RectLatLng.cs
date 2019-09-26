@@ -26,7 +26,7 @@ namespace GMap.NET
       /// <param name="lat">Latitude of the countries top left corner</param>
       /// <param name="lng">Longitude of the countries top left corner</param>
       /// <param name="widthLng">add this value to 'lng' to get the countries bottom right corner longitude coordinate</param>
-      /// <param name="heightLat">subtract this value to 'lat' to get the countries bottom right corner latitude coordinate</param>
+      /// <param name="heightLat">subtract this value from 'lat' to get the countries bottom right corner latitude coordinate</param>
       //Area = new RectLatLng(58.0794870805093, 20.3286067123543, 7.90883164336887, 2.506129113082);
       public RectLatLng(double lat, double lng, double widthLng, double heightLat)
       {
