@@ -1,5 +1,4 @@
-﻿
-namespace GMap.NET.MapProviders
+﻿namespace GMap.NET.MapProviders
 {
     using System;
     using System.Collections.Generic;
@@ -10,6 +9,8 @@ namespace GMap.NET.MapProviders
     using GMap.NET.Projections;
     using System.Text;
     using System.Security.Cryptography;
+    using System.Security.Authentication;
+    using GMap.NET.MapProviders.Germany;
 
     /// <summary>
     /// providers that are already build in
@@ -100,7 +101,7 @@ namespace GMap.NET.MapProviders
 
         public static readonly NearMapProvider NearMap = NearMapProvider.Instance;
         public static readonly NearSatelliteMapProvider NearSatelliteMap = NearSatelliteMapProvider.Instance;
-        public static readonly NearHybridMapProvider NearHybridMap = NearHybridMapProvider.Instance;
+        public static readonly NearHybridMapProvider NearHybridMap = NearHybridMapProvider.Instance;  
 
         public static readonly OviMapProvider OviMap = OviMapProvider.Instance;
         public static readonly OviSatelliteMapProvider OviSatelliteMap = OviSatelliteMapProvider.Instance;
@@ -148,7 +149,6 @@ namespace GMap.NET.MapProviders
         public static readonly ArcGIS_ShadedRelief_World_2D_MapProvider ArcGIS_ShadedRelief_World_2D_Map = ArcGIS_ShadedRelief_World_2D_MapProvider.Instance;
         public static readonly ArcGIS_StreetMap_World_2D_MapProvider ArcGIS_StreetMap_World_2D_Map = ArcGIS_StreetMap_World_2D_MapProvider.Instance;
         public static readonly ArcGIS_Topo_US_2D_MapProvider ArcGIS_Topo_US_2D_Map = ArcGIS_Topo_US_2D_MapProvider.Instance;
-
         public static readonly ArcGIS_World_Physical_MapProvider ArcGIS_World_Physical_Map = ArcGIS_World_Physical_MapProvider.Instance;
         public static readonly ArcGIS_World_Shaded_Relief_MapProvider ArcGIS_World_Shaded_Relief_Map = ArcGIS_World_Shaded_Relief_MapProvider.Instance;
         public static readonly ArcGIS_World_Street_MapProvider ArcGIS_World_Street_Map = ArcGIS_World_Street_MapProvider.Instance;
@@ -398,7 +398,14 @@ namespace GMap.NET.MapProviders
             PureImage ret = null;
 
 #if !PocketPC
-            WebRequest request = IsSocksProxy ? SocksHttpWebRequest.Create(url) : WebRequest.Create(url);
+           WebRequest requestDummy =  WebRequest.Create(url);
+           const SslProtocols _Tls12 = (SslProtocols)0x00000C00;
+           const SecurityProtocolType Tls12 = (SecurityProtocolType)_Tls12;
+           ServicePointManager.SecurityProtocol = Tls12;
+           WebRequest request = IsSocksProxy ? SocksHttpWebRequest.Create(url) : WebRequest.Create(url);
+           bool isItTrueItMustBeTrue = object.ReferenceEquals(request, requestDummy);
+
+
 #else
             WebRequest request = WebRequest.Create(url);
 #endif
@@ -428,26 +435,31 @@ namespace GMap.NET.MapProviders
                 r.Timeout = TimeoutMs;
             }
 #if !PocketPC
-            else if (request is SocksHttpWebRequest)
-            {
-                var r = request as SocksHttpWebRequest;
+         /* heuristicly unreachable code ?
+         else if (request is SocksHttpWebRequest)
+         {
+             var r = request as SocksHttpWebRequest;                
 
-                if (!string.IsNullOrEmpty(UserAgent))
-                {
-                    r.Headers.Add("User-Agent", UserAgent);
-                }
+             if (!string.IsNullOrEmpty(UserAgent))
+             {
+                 r.Headers.Add("User-Agent", UserAgent);
+             }
 
-                if (!string.IsNullOrEmpty(requestAccept))
-                {
-                    r.Headers.Add("Accept", requestAccept);
-                }
+             if (!string.IsNullOrEmpty(requestAccept))
+             {
+                 r.Headers.Add("Accept", requestAccept);
+             }
 
-                if (!string.IsNullOrEmpty(RefererUrl))
-                {
-                    r.Headers.Add("Referer", RefererUrl);
-                }              
-            }
-#endif       
+             if (!string.IsNullOrEmpty(RefererUrl))
+             {
+                 r.Headers.Add("Referer", RefererUrl);
+             }              
+         }*/
+#endif
+
+
+
+
             using (var response = request.GetResponse())
             {
                 if (CheckTileImageHttpResponse(response))
