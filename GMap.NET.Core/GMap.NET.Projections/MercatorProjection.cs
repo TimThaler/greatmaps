@@ -24,31 +24,12 @@ namespace GMap.NET.Projections
          }
       }
 
-      readonly GSize tileSize = new GSize(256, 256);
-      public override GSize TileSize
-      {
-         get
-         {
-            return tileSize;
-         }
-      }
+      public override GSize TileSize => new GSize(256, 256);
 
-      public override double Axis
-      {
-         get
-         {
-            return 6378137;
-         }
-      }
+      public override double Axis => 6378137;
 
-      public override double Flattening
-      {
-         get
-         {
-            return (1.0 / 298.257223563);
-         }
-      }
-
+      public override double Flattening => (1.0 / 298.257223563);
+      
       public override GPoint FromLatLngToPixel(double lat, double lng, int zoom)
       {
          GPoint ret = GPoint.Empty;
@@ -87,11 +68,8 @@ namespace GMap.NET.Projections
          return ret;
       }
 
-      public override GSize GetTileMatrixMinXY(int zoom)
-      {
-         return new GSize(0, 0);
-      }
-
+      public override GSize GetTileMatrixMinXY(int zoom) => new GSize(0, 0);
+      
       public override GSize GetTileMatrixMaxXY(int zoom)
       {
          long xy = (1 << zoom);
