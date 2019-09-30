@@ -156,14 +156,14 @@ namespace GMap.NET.WindowsPresentation
             PureImage img;
 
             // tile number inversion(BottomLeft -> TopLeft) for pergo maps
-            if(type is TurkeyMapProvider)
+            /*if(type is TurkeyMapProvider)
             {
                img = GMaps.Instance.GetImageFrom(type, new GPoint(p.X, maxOfTiles.Height - p.Y), zoom, out ex);
             }
             else // ok
-            {
+            {*/
                img = GMaps.Instance.GetImageFrom(type, p, zoom, out ex);
-            }
+           // }
 
             if(img != null)
             {
