@@ -29,7 +29,6 @@ namespace GMap.NET.Projections
         static readonly double semiMinor = 6356752.3141403561; // minor axis
         static readonly double semiMinor2 = 6356752.3142451793;     // minor axis
         static readonly double metersPerUnit = 1.0;
-        static readonly double COS_67P5 = 0.38268343236508977; // cosine of 67.5 degrees
         static readonly double AD_C = 1.0026000;               // Toms region 1 constant
 
         public override RectLatLng Bounds
@@ -188,12 +187,12 @@ namespace GMap.NET.Projections
             double Sin_p1 = T1 / S1; // sin(phi1), phi1 is estimated latitude
             double Cos_p1 = Sum / S1; // cos(phi1)
             double Rn = semiMajor / Math.Sqrt(1.0 - es * Sin_p1 * Sin_p1); // Earth radius at location
-            if (Cos_p1 >= COS_67P5)
+            if (Cos_p1 >= Constants.COS_67P5)
             {
                 Height = W / Cos_p1 - Rn;
             }
             else
-               if (Cos_p1 <= -COS_67P5)
+               if (Cos_p1 <= -Constants.COS_67P5)
             {
                 Height = W / -Cos_p1 - Rn;
             }
@@ -347,12 +346,12 @@ namespace GMap.NET.Projections
             double Cos_p1 = Sum / S1; // cos(phi1)
             double Rn = semiMajor / Math.Sqrt(1.0 - es * Sin_p1 * Sin_p1); // Earth radius at location
 
-            if (Cos_p1 >= COS_67P5)
+            if (Cos_p1 >= Constants.COS_67P5)
             {
                 Height = W / Cos_p1 - Rn;
             }
             else
-               if (Cos_p1 <= -COS_67P5)
+               if (Cos_p1 <= -Constants.COS_67P5)
             {
                 Height = W / -Cos_p1 - Rn;
             }

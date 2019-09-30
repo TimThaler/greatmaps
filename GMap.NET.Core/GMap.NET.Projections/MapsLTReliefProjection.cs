@@ -21,7 +21,6 @@ using System.Collections.Generic;
       static readonly double orignY = 10325013.240285;
 
       static readonly double scaleFactor = 0.9998;	                // scale factor				
-      static readonly double centralMeridian = 0.41887902047863912;// Center longitude (projection center) 
       static readonly double latOrigin = 0.0;	                   // center latitude			
       static readonly double falseNorthing = 0.0;	          // y offset in meters			
       static readonly double falseEasting = 500000.0;	       // x offset in meters			
@@ -29,7 +28,6 @@ using System.Collections.Generic;
       static readonly double semiMinor = 6356752.3141403561; // minor axis
       static readonly double semiMinor2 = 6356752.3142451793;		// minor axis
       static readonly double metersPerUnit = 1.0;
-      static readonly double COS_67P5 = 0.38268343236508977; // cosine of 67.5 degrees
       static readonly double AD_C = 1.0026000;               // Toms region 1 constant
 
       public override RectLatLng Bounds
@@ -186,12 +184,12 @@ using System.Collections.Generic;
          double Sin_p1 = T1 / S1; // sin(phi1), phi1 is estimated latitude
          double Cos_p1 = Sum / S1; // cos(phi1)
          double Rn = semiMajor / Math.Sqrt(1.0 - es * Sin_p1 * Sin_p1); // Earth radius at location
-         if(Cos_p1 >= COS_67P5)
+         if(Cos_p1 >= Constants.COS_67P5)
          {
             Height = W / Cos_p1 - Rn;
          }
          else
-            if(Cos_p1 <= -COS_67P5)
+            if(Cos_p1 <= -Constants.COS_67P5)
             {
                Height = W / -Cos_p1 - Rn;
             }
@@ -233,7 +231,7 @@ using System.Collections.Generic;
          double c, t, tq;	       // temporary values				
          double con, n, ml;	    // cone constant, small m			
 
-         delta_lon = AdjustLongitude(lon - centralMeridian);
+         delta_lon = AdjustLongitude(lon - Constants.centralMeridian);
          SinCos(lat, out sin_phi, out cos_phi);
 
          al = cos_phi * delta_lon;
@@ -345,12 +343,12 @@ using System.Collections.Generic;
          double Cos_p1 = Sum / S1; // cos(phi1)
          double Rn = semiMajor / Math.Sqrt(1.0 - es * Sin_p1 * Sin_p1); // Earth radius at location
 
-         if(Cos_p1 >= COS_67P5)
+         if(Cos_p1 >= Constants.COS_67P5)
          {
             Height = W / Cos_p1 - Rn;
          }
          else
-            if(Cos_p1 <= -COS_67P5)
+            if(Cos_p1 <= -Constants.COS_67P5)
             {
                Height = W / -Cos_p1 - Rn;
             }
@@ -425,7 +423,7 @@ using System.Collections.Generic;
                 10.0 * c - 4.0 * cs - 9.0 * esp - ds / 30.0 * (61.0 + 90.0 * t +
                 298.0 * c + 45.0 * ts - 252.0 * esp - 3.0 * cs)));
 
-            double lon = AdjustLongitude(centralMeridian + (d * (1.0 - ds / 6.0 * (1.0 + 2.0 * t +
+            double lon = AdjustLongitude(Constants.centralMeridian + (d * (1.0 - ds / 6.0 * (1.0 + 2.0 * t +
                 c - ds / 20.0 * (5.0 - 2.0 * c + 28.0 * t - 3.0 * cs + 8.0 * esp +
                 24.0 * ts))) / cos_phi));
 
@@ -437,9 +435,9 @@ using System.Collections.Generic;
          else
          {
             if(p.Length < 3)
-               return new double[] { RadiansToDegrees(HALF_PI * Sign(y)), RadiansToDegrees(centralMeridian) };
+               return new double[] { RadiansToDegrees(HALF_PI * Sign(y)), RadiansToDegrees(Constants.centralMeridian) };
             else
-               return new double[] { RadiansToDegrees(HALF_PI * Sign(y)), RadiansToDegrees(centralMeridian), p[2] };
+               return new double[] { RadiansToDegrees(HALF_PI * Sign(y)), RadiansToDegrees(Constants.centralMeridian), p[2] };
          }
       }
 
