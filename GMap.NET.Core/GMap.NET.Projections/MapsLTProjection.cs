@@ -22,9 +22,7 @@ namespace GMap.NET.Projections
 
       static readonly double scaleFactor = 0.9998;	                // scale factor			
       static readonly double falseNorthing = 0.0;	          // y offset in meters			
-      static readonly double falseEasting = 500000.0;	       // x offset in meters		
-      static readonly double semiMinor = 6356752.3141403561; // minor axis
-      static readonly double semiMinor2 = 6356752.3142451793;		// minor axis
+      static readonly double falseEasting = 500000.0;	       // x offset in meters	
       static readonly double metersPerUnit = 1.0;
       static readonly double AD_C = 1.0026000;               // Toms region 1 constant
 
@@ -102,13 +100,13 @@ namespace GMap.NET.Projections
       double[] DTM10(double[] lonlat)
       {
          // Eccentricity squared : (a^2 - b^2)/a^2
-         double es = 1.0 - (semiMinor2 * semiMinor2) / (Constants.semiMajor * Constants.semiMajor); // e^2
+         double es = 1.0 - (Constants.semiMinor2 * Constants.semiMinor2) / (Constants.semiMajor * Constants.semiMajor); // e^2
 
          // Second eccentricity squared : (a^2 - b^2)/b^2
-         double ses = (Math.Pow(Constants.semiMajor, 2) - Math.Pow(semiMinor2, 2)) / Math.Pow(semiMinor2, 2);
+         double ses = (Math.Pow(Constants.semiMajor, 2) - Math.Pow(Constants.semiMinor2, 2)) / Math.Pow(Constants.semiMinor2, 2);
 
-         double ba = semiMinor2 / Constants.semiMajor;
-         double ab = Constants.semiMajor / semiMinor2;
+         double ba = Constants.semiMinor2 / Constants.semiMajor;
+         double ab = Constants.semiMajor / Constants.semiMinor2;
 
          double lon = DegreesToRadians(lonlat[0]);
          double lat = DegreesToRadians(lonlat[1]);
@@ -123,13 +121,13 @@ namespace GMap.NET.Projections
       double[] MTD10(double[] pnt)
       {
          // Eccentricity squared : (a^2 - b^2)/a^2
-         double es = 1.0 - (semiMinor * semiMinor) / (Constants.semiMajor * Constants.semiMajor); // e^2
+         double es = 1.0 - (Constants.semiMinor * Constants.semiMinor) / (Constants.semiMajor * Constants.semiMajor); // e^2
 
          // Second eccentricity squared : (a^2 - b^2)/b^2
-         double ses = (Math.Pow(Constants.semiMajor, 2) - Math.Pow(semiMinor, 2)) / Math.Pow(semiMinor, 2);
+         double ses = (Math.Pow(Constants.semiMajor, 2) - Math.Pow(Constants.semiMinor, 2)) / Math.Pow(Constants.semiMinor, 2);
 
-         double ba = semiMinor / Constants.semiMajor;
-         double ab = Constants.semiMajor / semiMinor;
+         double ba = Constants.semiMinor / Constants.semiMajor;
+         double ab = Constants.semiMajor / Constants.semiMinor;
 
          bool AtPole = false; // is location in polar region
          double Z = pnt.Length < 3 ? 0 : pnt[2].Equals(Double.NaN) ? 0 : pnt[2];
@@ -167,7 +165,7 @@ namespace GMap.NET.Projections
                      }
                      else // center of earth
                      {
-                        return new double[] { RadiansToDegrees(lon), RadiansToDegrees(Math.PI * 0.5), -semiMinor, };
+                        return new double[] { RadiansToDegrees(lon), RadiansToDegrees(Math.PI * 0.5), -Constants.semiMinor, };
                      }
                }
          }
@@ -178,7 +176,7 @@ namespace GMap.NET.Projections
          double Sin_B0 = T0 / S0; // sin(B0), B0 is estimate of Bowring aux variable
          double Cos_B0 = W / S0; // cos(B0)
          double Sin3_B0 = Math.Pow(Sin_B0, 3);
-         double T1 = Z + semiMinor * ses * Sin3_B0; // corrected estimate of vertical component
+         double T1 = Z + Constants.semiMinor * ses * Sin3_B0; // corrected estimate of vertical component
          double Sum = W - Constants.semiMajor * es * Cos_B0 * Cos_B0 * Cos_B0; // numerator of cos(phi1)
          double S1 = Math.Sqrt(T1 * T1 + Sum * Sum); // corrected estimate of horizontal component
          double Sin_p1 = T1 / S1; // sin(phi1), phi1 is estimated latitude
@@ -211,7 +209,7 @@ namespace GMap.NET.Projections
          double e, es, esp;		// eccentricity constants		
          double ml0;		         // small value m			
 
-         es = 1.0 - Math.Pow(semiMinor / Constants.semiMajor, 2);
+         es = 1.0 - Math.Pow(Constants.semiMinor / Constants.semiMajor, 2);
          e = Math.Sqrt(es);
          e0 = e0fn(es);
          e1 = e1fn(es);
@@ -259,13 +257,13 @@ namespace GMap.NET.Projections
       double[] DTM01(double[] lonlat)
       {
          // Eccentricity squared : (a^2 - b^2)/a^2
-         double es = 1.0 - (semiMinor * semiMinor) / (Constants.semiMajor * Constants.semiMajor);
+         double es = 1.0 - (Constants.semiMinor * Constants.semiMinor) / (Constants.semiMajor * Constants.semiMajor);
 
          // Second eccentricity squared : (a^2 - b^2)/b^2
-         double ses = (Math.Pow(Constants.semiMajor, 2) - Math.Pow(semiMinor, 2)) / Math.Pow(semiMinor, 2);
+         double ses = (Math.Pow(Constants.semiMajor, 2) - Math.Pow(Constants.semiMinor, 2)) / Math.Pow(Constants.semiMinor, 2);
 
-         double ba = semiMinor / Constants.semiMajor;
-         double ab = Constants.semiMajor / semiMinor;
+         double ba = Constants.semiMinor / Constants.semiMajor;
+         double ab = Constants.semiMajor / Constants.semiMinor;
 
          double lon = DegreesToRadians(lonlat[0]);
          double lat = DegreesToRadians(lonlat[1]);
@@ -280,13 +278,13 @@ namespace GMap.NET.Projections
       double[] MTD01(double[] pnt)
       {
          // Eccentricity squared : (a^2 - b^2)/a^2
-         double es = 1.0 - (semiMinor2 * semiMinor2) / (Constants.semiMajor * Constants.semiMajor);
+         double es = 1.0 - (Constants.semiMinor2 * Constants.semiMinor2) / (Constants.semiMajor * Constants.semiMajor);
 
          // Second eccentricity squared : (a^2 - b^2)/b^2
-         double ses = (Math.Pow(Constants.semiMajor, 2) - Math.Pow(semiMinor2, 2)) / Math.Pow(semiMinor2, 2);
+         double ses = (Math.Pow(Constants.semiMajor, 2) - Math.Pow(Constants.semiMinor2, 2)) / Math.Pow(Constants.semiMinor2, 2);
 
-         double ba = semiMinor2 / Constants.semiMajor;
-         double ab = Constants.semiMajor / semiMinor2;
+         double ba = Constants.semiMinor2 / Constants.semiMajor;
+         double ab = Constants.semiMajor / Constants.semiMinor2;
 
          bool At_Pole = false; // is location in polar region
          double Z = pnt.Length < 3 ? 0 : pnt[2].Equals(Double.NaN) ? 0 : pnt[2];
@@ -324,7 +322,7 @@ namespace GMap.NET.Projections
                      }
                      else // center of earth
                      {
-                        return new double[] { RadiansToDegrees(lon), RadiansToDegrees(Math.PI * 0.5), -semiMinor2, };
+                        return new double[] { RadiansToDegrees(lon), RadiansToDegrees(Math.PI * 0.5), -Constants.semiMinor2, };
                      }
                }
          }
@@ -336,7 +334,7 @@ namespace GMap.NET.Projections
          double Sin_B0 = T0 / S0;             // sin(B0), B0 is estimate of Bowring aux variable
          double Cos_B0 = W / S0;              // cos(B0)
          double Sin3_B0 = Math.Pow(Sin_B0, 3);
-         double T1 = Z + semiMinor2 * ses * Sin3_B0; //corrected estimate of vertical component
+         double T1 = Z + Constants.semiMinor2 * ses * Sin3_B0; //corrected estimate of vertical component
          double Sum = W - Constants.semiMajor * es * Cos_B0 * Cos_B0 * Cos_B0; // numerator of cos(phi1)
          double S1 = Math.Sqrt(T1 * T1 + Sum * Sum); // corrected estimate of horizontal component
          double Sin_p1 = T1 / S1;  // sin(phi1), phi1 is estimated latitude
@@ -370,7 +368,7 @@ namespace GMap.NET.Projections
          double e, es, esp;		// eccentricity constants		
          double ml0;		    // small value m
 
-         es = 1.0 - Math.Pow(semiMinor / Constants.semiMajor, 2);
+         es = 1.0 - Math.Pow(Constants.semiMinor / Constants.semiMajor, 2);
          e = Math.Sqrt(es);
          e0 = e0fn(es);
          e1 = e1fn(es);
